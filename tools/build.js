@@ -3,33 +3,45 @@
 /* eslint-disable no-console */
 import webpack from 'webpack';
 import config from '../webpack.config.prod';
-import {chalkError, chalkSuccess, chalkWarning, chalkProcessing} from './chalkConfig';
+import {
+    chalkError,
+    chalkSuccess,
+    chalkWarning,
+    chalkProcessing,
+} from './chalkConfig';
 
 process.env.NODE_ENV = 'production'; // this assures React is built in prod mode and that the Babel dev config doesn't apply.
 
-console.log(chalkProcessing('Generating minified bundle. This will take a moment...'));
+console.log(
+    chalkProcessing('Generating minified bundle. This will take a moment...')
+);
 
 webpack(config).run((error, stats) => {
-  if (error) { // so a fatal error occurred. Stop here.
-    console.log(chalkError(error));
-    return 1;
-  }
+    if (error) {
+        // so a fatal error occurred. Stop here.
+        console.log(chalkError(error));
+        return 1;
+    }
 
-  const jsonStats = stats.toJson();
+    const jsonStats = stats.toJson();
 
-  if (stats.hasErrors && jsonStats.errors.length > 0) {
-    return jsonStats.errors.map(error => console.log(chalkError(error)));
-  }
+    if (stats.hasErrors && jsonStats.errors.length > 0) {
+        return jsonStats.errors.map((error) => console.log(chalkError(error)));
+    }
 
-  if (stats.hasWarnings && jsonStats.warnings.length > 0) {
-    console.log(chalkWarning('Webpack generated the following warnings: '));
-    jsonStats.warnings.map(warning => console.log(chalkWarning(warning)));
-  }
+    if (stats.hasWarnings && jsonStats.warnings.length > 0) {
+        console.log(chalkWarning('Webpack generated the following warnings: '));
+        jsonStats.warnings.map((warning) => console.log(chalkWarning(warning)));
+    }
 
-  console.log(`Webpack stats: ${stats}`);
+    console.log(`Webpack stats: ${stats}`);
 
-  // if we got this far, the build succeeded.
-  console.log(chalkSuccess('Your app is compiled in production mode in /dist. It\'s ready to roll!'));
+    // if we got this far, the build succeeded.
+    console.log(
+        chalkSuccess(
+            "Your app is compiled in production mode in /dist. It's ready to roll!"
+        )
+    );
 
-  return 0;
+    return 0;
 });
