@@ -3,18 +3,25 @@
 
 name: test
 
-on:
-  release:
-    types: [created]
+on: 
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest,macOS-latest]
+    
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: ${{ matrix.node-version }}
       - run: npm ic
       - run: npm test
       - run: npm analyze-bundle
