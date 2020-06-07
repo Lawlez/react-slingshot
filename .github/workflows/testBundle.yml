@@ -26,6 +26,6 @@ jobs:
       - run: npm ic
       - run: npm test
       - run: npm run analyze-bundle
-      - run: babel-node tools/build.js
+      - run: npm run test:build
 
  
