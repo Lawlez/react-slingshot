@@ -25,7 +25,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ic
       - run: npm test
-      - run: npm analyze-bundle
+      - run: npm run analyze-bundle
       - run: babel-node tools/build.js
 
  
