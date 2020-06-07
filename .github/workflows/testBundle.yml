@@ -12,10 +12,11 @@ on:
 
 jobs:
   build:
-    runs-on: [ubuntu-latest,macOS-latest]
-    
+    runs-on: ${{ matrix.os }}
+    name: Testing Slingshot
     strategy:
       matrix:
+        os: [ubuntu-16.04, ubuntu-18.04]
         node-version: [12.x, 14.x]
     steps:
       - uses: actions/checkout@v2
